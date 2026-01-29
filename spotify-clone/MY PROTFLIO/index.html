@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name | Frontend Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Primary Colors - Trust & Professionalism */
+            --primary: #4F46E5;
+            --primary-light: #818CF8;
+            --primary-dark: #3730A3;
+            
+            /* Secondary - Growth & Freshness */
+            --secondary: #10B981;
+            --secondary-light: #34D399;
+            
+            /* Neutrals - Clean & Readable */
+            --dark: #1F2937;
+            --medium: #6B7280;
+            --light: #F9FAFB;
+            --white: #FFFFFF;
+            
+            /* Accents */
+            --accent-warm: #F59E0B;
+            --accent-cool: #3B82F6;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 6rem;
+            
+            /* Typography */
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+
+        section {
+            padding: var(--space-xl) 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-sm);
+        }
+
+        h1 { font-size: 3.5rem; }
+        h2 { font-size: 2.5rem; text-align: center; margin-bottom: var(--space-lg); }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.25rem; }
+
+        p {
+            margin-bottom: var(--space-sm);
+            color: var(--medium);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-light);
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: var(--space-lg);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            background: var(--primary);
+            bottom: -10px;
+            left: 20%;
+            border-radius: 2px;
+        }
+
+        /* ===== HEADER & NAVIGATION ===== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--space-md);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 8rem;
+            padding-bottom: var(--space-xl);
+            background: linear-gradient(135deg, var(--light) 0%, #E0E7FF 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: var(--space-sm);
+            color: var(--dark);
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto var(--space-lg);
+            color: var(--medium);
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+            margin-bottom: var(--space-lg);
+        }
+
+        .badge {
+            background: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E7EB;
+        }
+
+        .badge i {
+            color: var(--secondary);
+            margin-right: 8px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: var(--space-sm);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        .about {
+            background: var(--white);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+
+        .stat {
+            text-align: center;
+            padding: var(--space-md);
+            background: var(--light);
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .stat:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--medium);
+            font-weight: 500;
+        }
+
+        /* ===== SKILLS SECTION ===== */
+        .skills {
+            background: var(--light);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .skill-item {
+            margin-bottom: var(--space-md);
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            font-weight: 600;
+        }
+
+        .skill-percent {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .skill-bar {
+            height: 10px;
+            background: #E5E7EB;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
+        /* ===== PROJECTS SECTION ===== */
+        .projects {
+            background: var(--white);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-img {
+            height: 200px;
+            background: linear-gradient(45deg, #6366F1, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .project-content {
+            padding: var(--space-md);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .project-tag {
+            background: var(--light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--medium);
+        }
+
+        .project-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: var(--space-sm);
+        }
+
+        .status-complete {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-progress {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .project-links {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-link:hover {
+            color: var(--primary-dark);
+        }
+
+        /* ===== SERVICES SECTION ===== */
+        .services {
+            background: var(--light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: var(--space-sm) 0;
+        }
+
+        .service-features {
+            list-style: none;
+            text-align: left;
+            margin: var(--space-md) 0;
+        }
+
+        .service-features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-features li i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact {
+            background: var(--white);
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: var(--light);
+            padding: var(--space-lg);
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: var(--space-lg) 0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: #9CA3AF;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: var(--space-md);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding-top: 6rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Your<span>Name</span></a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact" class="btn btn-primary">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Hi, I'm <span>Your Name</span><br>Frontend Developer</h1>
+                
+                <p>"Honest work, clean code, no shortcuts. 3+ years HTML/CSS experience, currently mastering JavaScript and building real projects daily."</p>
+                
+                <div class="hero-badges">
+                    <div class="badge"><i class="fas fa-check-circle"></i> 3+ Years HTML/CSS</div>
+                    <div class="badge"><i class="fas fa-book"></i> Learning JavaScript</div>
+                    <div class="badge"><i class="fas fa-code"></i> Clean Code Advocate</div>
+                </div>
+                
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Free Consultation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT SECTION ===== -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">My Journey</h2>
+            
+            <div class="about-content">
+                <p>I've spent 3 years mastering HTML & CSS. Now I'm adding JavaScript to my skills. I don't pretend to know everything, but I know what I know well.</p>
+                
+                <p><strong>My Promise:</strong> I won't take projects I can't deliver. I'll communicate clearly about timelines. My code will be clean and honest.</p>
+                
+                <div class="about-stats">
+                    <div class="stat">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Projects Built</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Code Honesty</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Learning Mode</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS SECTION ===== -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">My Skills</h2>
+            
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>✅ Strong Foundation</h3>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">HTML5</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="95"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">CSS3</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Responsive Design</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>🚧 Currently Learning</h3>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">JavaScript</span>
+                            <span class="skill-percent">60%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="60"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">DOM Manipulation</span>
+                            <span class="skill-percent">50%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="50"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">API Integration</span>
+                            <span class="skill-percent">30%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="30"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS SECTION ===== -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            
+            <div class="projects-grid">
+                <!-- Netflix Clone -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-status status-complete">✅ 100% Complete</div>
+                        <h3>Netflix Interface Clone</h3>
+                        
+                        <div class="project-tags">
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">Responsive</span>
+                            <span class="project-tag">Animations</span>
+                        </div>
+                        
+                        <p>A static Netflix UI replica built with pure HTML/CSS. Features responsive design, hover effects, and modal windows.</p>
+                        
+                        <p><strong>What's Real:</strong> Design, responsiveness, animations</p>
+                        <p><strong>What's Not:</strong> No backend, no real movies</p>
+                        
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Spotify Clone -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-status status-progress">🚧 In Progress</div>
+                        <h3>Spotify Music Player</h3>
+                        
+                        <div class="project-tags">
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Audio API</span>
+                        </div>
+                        
+                        <p>Building a music player interface. HTML/CSS structure complete, currently adding JavaScript play/pause functionality.</p>
+                        
+                        <p><strong>Completed:</strong> Layout, styling</p>
+                        <p><strong>Learning Now:</strong> JavaScript controls, audio handling</p>
+                        
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fas fa-eye"></i> Preview
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> Follow Progress
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES SECTION ===== -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">What I Can Do</h2>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Landing Page Development</h3>
+                    <div class="service-price">$150 - $300</div>
+                    
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Static, responsive landing page</li>
+                        <li><i class="fas fa-check"></i> Clean HTML5/CSS3 code</li>
+                        <li><i class="fas fa-check"></i> Basic contact forms</li>
+                        <li><i class="fas fa-check"></i> Mobile optimization</li>
+                        <li><i class="fas fa-check"></i> 3-5 days delivery</li>
+                    </ul>
+                    
+                    <a href="#contact" class="btn btn-primary">Get Quote</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-roller"></i>
+                    </div>
+                    <h3>Website Redesign</h3>
+                    <div class="service-price">$200 - $400</div>
+                    
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Update old HTML/CSS</li>
+                        <li><i class="fas fa-check"></i> Make site responsive</li>
+                        <li><i class="fas fa-check"></i> Improve performance</li>
+                        <li><i class="fas fa-check"></i> Fix styling issues</li>
+                        <li><i class="fas fa-check"></i> 1-2 weeks delivery</li>
+                    </ul>
+                    
+                    <a href="#contact" class="btn btn-primary">Get Quote</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>Component Building</h3>
+                    <div class="service-price">$50 - $150/component</div>
+                    
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Navigation menus</li>
+                        <li><i class="fas fa-check"></i> Image galleries</li>
+                        <li><i class="fas fa-check"></i> Pricing tables</li>
+                        <li><i class="fas fa-check"></i> Animated sections</li>
+                        <li><i class="fas fa-check"></i> 1-2 days delivery</li>
+                    </ul>
+                    
+                    <a href="#contact" class="btn btn-primary">Get Quote</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: var(--space-lg); background: #FEF3C7; padding: var(--space-md); border-radius: 10px;">
+                <p><strong>⚠️ Honest Disclaimer:</strong> I won't take projects I can't deliver yet - no e-commerce, no login systems, no payment integrations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Let's Work Together</h2>
+            
+            <div class="contact-container">
+                <div class="contact-form">
+                    <h3 style="text-align: center; margin-bottom: var(--space-md);">Free 20-Minute Consultation</h3>
+                    <p style="text-align: center; margin-bottom: var(--space-lg); color: var(--medium);">Let's discuss if I'm the right fit for your project</p>
+                    
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project">Project Type</label>
+                            <input type="text" id="project" placeholder="e.g., Landing page, Redesign, Component">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-codepen"></i></a>
+            </div>
+            
+            <p style="margin-bottom: var(--space-sm); font-size: 1.1rem;">"No fake promises, just real work."</p>
+            
+            <p class="copyright">© 2024 Your Name. All code written with honesty.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== MOBILE MENU TOGGLE =====
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // ===== SKILL BARS ANIMATION =====
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                bar.style.width = width + '%';
+            });
+        }
+        
+        // Animate when skills section is in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(document.querySelector('.skills'));
+        
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // ===== FORM SUBMISSION =====
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const project = document.getElementById('project').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if(!name || !email) {
+                alert('Please fill in required fields');
+                return;
+            }
+            
+            // In a real site, you would send this to a server
+            // For demo, just show a success message
+            alert(`Thanks ${name}! I'll contact you at ${email} within 24 hours to discuss your ${project} project.`);
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // ===== SCROLL ANIMATIONS =====
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if(window.scrollY > 100) {
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Portfolio loaded!');
+        });
+    </script>
+</body>
+</html>
