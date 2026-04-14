@@ -247,6 +247,6 @@ async function main() {
 
     // })
 
-    //hey i just did it
+
 }
 main()
