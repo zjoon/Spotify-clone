@@ -246,7 +246,7 @@ async function main() {
     //     }
 
     // })
-    // lets add albums dynimacally
+
 
 }
 main()
