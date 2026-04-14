@@ -173,64 +173,64 @@ async function main() {
 
 
 
-document.querySelector("#next").addEventListener("click", () => {
-    let allSpans = document.querySelectorAll(".music span");
-    let currentSng = document.querySelector(".songinfo").innerHTML;
-    let currentIndex = 0;
+    document.querySelector("#next").addEventListener("click", () => {
+        let allSpans = document.querySelectorAll(".music span");
+        let currentSng = document.querySelector(".songinfo").innerHTML;
+        let currentIndex = 0;
 
-    for (let i = 0; i < allSpans.length; i++) {
-        if (allSpans[i].innerText.trim() === currentSng) {  // ✅ innerText
-            currentIndex = i;
-            break;
+        for (let i = 0; i < allSpans.length; i++) {
+            if (allSpans[i].innerText.trim() === currentSng) {  // ✅ innerText
+                currentIndex = i;
+                break;
+            }
         }
-    }
 
-    let nextIndex = currentIndex + 1;
-    if (nextIndex >= allSpans.length) {
-        nextIndex = 0;
-    }
-
-    let nextSong = allSpans[nextIndex].innerText.trim();  // ✅ innerText
-    PlayMusic(nextSong);
-    playbtn.classList.add("ri-pause-circle-line");
-    playbtn.classList.remove("ri-play-circle-line");
-});
-
-document.querySelector("#prev").addEventListener("click", () => {
-    let allSpans = document.querySelectorAll(".music span");
-    let currentSng = document.querySelector(".songinfo").innerHTML;
-    let currentIndex = 0;
-
-    for (let i = 0; i < allSpans.length; i++) {
-        if (allSpans[i].innerText.trim() === currentSng) {  // ✅ innerText
-            currentIndex = i;
-            break;
+        let nextIndex = currentIndex + 1;
+        if (nextIndex >= allSpans.length) {
+            nextIndex = 0;
         }
-    }
 
-    let prevIndex = currentIndex - 1;
-    if (prevIndex < 0) {
-        prevIndex = allSpans.length - 1;
-    }
+        let nextSong = allSpans[nextIndex].innerText.trim();  // ✅ innerText
+        PlayMusic(nextSong);
+        playbtn.classList.add("ri-pause-circle-line");
+        playbtn.classList.remove("ri-play-circle-line");
+    });
 
-    let prevSong = allSpans[prevIndex].innerText.trim();  // ✅ innerText
-    PlayMusic(prevSong);
-    playbtn.classList.add("ri-pause-circle-line");
-    playbtn.classList.remove("ri-play-circle-line");
-});
+    document.querySelector("#prev").addEventListener("click", () => {
+        let allSpans = document.querySelectorAll(".music span");
+        let currentSng = document.querySelector(".songinfo").innerHTML;
+        let currentIndex = 0;
+
+        for (let i = 0; i < allSpans.length; i++) {
+            if (allSpans[i].innerText.trim() === currentSng) {  // ✅ innerText
+                currentIndex = i;
+                break;
+            }
+        }
+
+        let prevIndex = currentIndex - 1;
+        if (prevIndex < 0) {
+            prevIndex = allSpans.length - 1;
+        }
+
+        let prevSong = allSpans[prevIndex].innerText.trim();  // ✅ innerText
+        PlayMusic(prevSong);
+        playbtn.classList.add("ri-pause-circle-line");
+        playbtn.classList.remove("ri-play-circle-line");
+    });
 
 
-//add event to volume button
-  document.querySelector(".range").addEventListener("change", (e) => {
+    //add event to volume button
+    document.querySelector(".range").addEventListener("change", (e) => {
         console.log("Setting volume to", e.target.value, "/ 100")
         currentsong.volume = parseInt(e.target.value) / 100
-      
+
     })
 
     //   if (currentsong.volume >0){
     //         document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("mute.svg", "volume.svg")
     //     }
-   
+
 
     // // Add event listener to mute the track
     // document.querySelector(".volume>img").addEventListener("click", e=>{ 
@@ -246,7 +246,7 @@ document.querySelector("#prev").addEventListener("click", () => {
     //     }
 
     // })
+    // lets add albums dynimacally
 
-
- }
+}
 main()
