@@ -339,6 +339,14 @@ body {
     cursor: pointer;
 }
 
+.ri-volume-mute-line {
+    position: relative;
+    left: -55px;
+    font-size: 35px;
+    color: #ffffff;
+}
+
+
 .seekbar {
     width: 65vw;
     height: 5px;
@@ -857,6 +865,11 @@ i {
         left: -40px;
     }
 
+    .ri-volume-mute-line {
+        font-size: 25px;
+        left: -40px;
+    }
+
 
 }
 
@@ -1005,6 +1018,11 @@ i {
         left: -15px;
     }
 
+    .range .ri-volume-mute-line {
+        position: relative;
+        left: -15px;
+    }
+
     .musicplayer {
         width: 90vw;
 
@@ -1091,6 +1109,11 @@ i {
 
 
     }
+
+    .ri-volume-mute-line {
+        font-size: 25px;
+        left: -40px;
+    }
 }
 
 
@@ -1117,6 +1140,11 @@ i {
     }
 
     .ri-volume-up-line {
+        font-size: 25px;
+        left: -11px;
+    }
+
+    .ri-volume-mute-line {
         font-size: 25px;
         left: -11px;
     }

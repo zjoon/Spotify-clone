@@ -1,7 +1,7 @@
 console.log("Lets write some javascript")
 let currentsong = new Audio;
 let songs;
-
+let currentfolder;
 
 
 function secondsToMinutesSeconds(seconds) {
@@ -18,12 +18,13 @@ function secondsToMinutesSeconds(seconds) {
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-async function getsongs() {
+async function getsongs(folder) {
+    currentfolder = folder;
 
     //   Phelay url say songs ko fetch kiya yani hasil kiya 
 
-    let a = await fetch("http://127.0.0.1:3000/spotify-clone/songs/")
-
+    let a = await fetch(`/${folder}/`)
+    // console.log(a)
     // Then un ko text main karwaya tabdil
     let response = await a.text();
     // Then console.log kiya us kay results ko
@@ -45,47 +46,21 @@ async function getsongs() {
     // ab humain a yani links console.log kar kay mil gaye to ab hymain un kay bhin andar kay links find karnay hain 
 
     // aik emtpy araay banany jis main bad main links aik sath store ho sakain 
-    let songs = [];
+    songs = [];
+
     // Then loop lagaya jo kay as kay index say lay kay length jahantak wo hain wahan tak jaye and href kay end pay jahan jahan mood wala lafaz hay wo hred lay aye songs aray main endswith ka use kiya and kuch syntax erroes fixes kiye then hows and one slash mistake
 
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
         if (element.href.endsWith(".mp4")) {
-            songs.push(element.href.replaceAll("http://127.0.0.1:3000/spotify-clone/%5Cspotify-clone%5Csongs%5C", " "));
+            songs.push(element.innerHTML);
         }
     }
 
-    return (songs)
-
-    //finally songs a gaye after 3 hours of patience and work and some help of ai for syntax fixes
 
 
-
-}
-// all things were gone so we started form scratch form 3 hours of work consistently and crying 
-const PlayMusic = (track, pause = false) => {
-    currentsong.src = "songs/" + track.trim();
-    if (!pause) {
-
-        currentsong.play();
-
-    }
-
-    currentsong.onended = () => {
-        playbtn.classList.add("ri-play-circle-line");
-        playbtn.classList.remove("ri-pause-circle-line");
-    }
-    let songinfo = document.querySelector(".songinfo").innerHTML = track;
-    let songtime = document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
-
-}
-
-async function main() {
-
-
-    songs = await getsongs()
-    // console.log(songs)
     PlayMusic(songs[0], true);
+
 
     let musicContainer = document.querySelector(".music");
 
@@ -98,8 +73,7 @@ async function main() {
         let span = document.createElement("span");
 
         // Add music icon INSIDE span
-        span.innerHTML = `<i class="ri-music-2-line"></i> &nbsp;&nbsp;&nbsp; ${song.replaceAll("%20", " ")}`;
-
+        span.innerHTML = `<i class="ri-music-2-line"></i>&nbsp;&nbsp;&nbsp; ${song}`;
         // Add to container
         musicContainer.appendChild(span);
     }
@@ -122,6 +96,49 @@ async function main() {
         })
 
     })
+
+
+
+
+}
+
+
+// here
+
+
+
+//finally songs a gaye after 3 hours of patience and work and some help of ai for syntax fixes
+
+
+
+
+// all things were gone so we started form scratch form 3 hours of work consistently and crying 
+let PlayMusic = (track, pause = false) => {
+
+    currentsong.src = `/${currentfolder}/${track}`;
+
+    if (!pause) {
+
+        currentsong.play();
+
+    }
+
+    currentsong.onended = () => {
+        playbtn.classList.add("ri-play-circle-line");
+        playbtn.classList.remove("ri-pause-circle-line");
+    }
+    let songinfo = document.querySelector(".songinfo").innerHTML = track
+    let songtime = document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
+
+}
+
+
+async function main() {
+
+
+    await getsongs("songs/ncs");
+
+
     //now a evnet listener is added to each span and when we click on it and it changes the button play and pause
 
     let playbtn = document.querySelector("  #playbtn");
@@ -227,26 +244,49 @@ async function main() {
 
     })
 
-    //   if (currentsong.volume >0){
-    //         document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("mute.svg", "volume.svg")
-    //     }
+    Array.from(document.getElementsByClassName("card")).forEach(e => {
+        e.addEventListener("click", async item => {
+
+            songs = await getsongs(`songs/${item.currentTarget.dataset.folder}`)
+
+        })
+    })
 
 
-    // // Add event listener to mute the track
-    // document.querySelector(".volume>img").addEventListener("click", e=>{ 
-    //     if(e.target.src.includes("volume.svg")){
-    //         e.target.src = e.target.src.replace("volume.svg", "mute.svg")
-    //         currentSong.volume = 0;
-    //         document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
-    //     }
-    //     else{
-    //         e.target.src = e.target.src.replace("mute.svg", "volume.svg")
-    //         currentSong.volume = .10;
-    //         document.querySelector(".range").getElementsByTagName("input")[0].value = 10;
-    //     }
-
-    // })
 
 
+    let muted = false;
+    let lastVolume = 70;
+
+    const volumeIcon = document.querySelector(".range i");
+    const volumeInput = document.querySelector(".range input");
+
+    volumeIcon.addEventListener("click", () => {
+        if (!muted) {
+            lastVolume = volumeInput.value;
+            currentsong.volume = 0;
+            volumeInput.value = 0;
+            volumeIcon.className = "ri-volume-mute-line";
+            muted = true;
+        } else {
+            currentsong.volume = lastVolume / 100;
+            volumeInput.value = lastVolume;
+            volumeIcon.className = "ri-volume-up-line";
+            muted = false;
+        }
+    });
+
+    // Volume slider change
+    volumeInput.addEventListener("input", (e) => {
+        currentsong.volume = e.target.value / 100;
+
+        if (e.target.value == 0) {
+            volumeIcon.className = "ri-volume-mute-line";
+            muted = true;
+        } else {
+            volumeIcon.className = "ri-volume-up-line";
+            muted = false;
+        }
+    });
 }
 main()
