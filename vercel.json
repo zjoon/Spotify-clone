@@ -1,8 +1,8 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/songs/(.*)",
-      "dest": "/songs/$1"
+      "source": "/songs/(.*)",
+      "destination": "/songs/$1"
     }
   ]
 }
