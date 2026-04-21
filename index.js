@@ -23,7 +23,7 @@ async function getsongs(folder) {
 
     //   Phelay url say songs ko fetch kiya yani hasil kiya 
 
-    let a = await fetch(`/songs/${folder}/`)
+    let a = await fetch(`/${folder}/`)
 
     // Then un ko text main karwaya tabdil
     let response = await a.text();
@@ -117,7 +117,7 @@ async function getsongs(folder) {
 // all things were gone so we started form scratch form 3 hours of work consistently and crying 
 let PlayMusic = (track, pause = false) => {
 
-    currentsong.src = `/songs/${currentfolder}/${track}`;
+    currentsong.src = `/${currentfolder}/${track}`;
 
     if (!pause) {
         currentsong.play();
