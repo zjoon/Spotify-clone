@@ -195,7 +195,7 @@ async function displayAlbums() {
 async function main() {
 
 
-    await getsongs("songs/Crystalline Drive");
+    await getsongs("songs/CrystallineDrive");
     //now display albums
     displayAlbums();
 
