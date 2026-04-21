@@ -24,25 +24,25 @@ async function getsongs(folder) {
     //   Phelay url say songs ko fetch kiya yani hasil kiya 
 
     let a = await fetch(`/${folder}/`)
-    // console.log(a)
+
     // Then un ko text main karwaya tabdil
     let response = await a.text();
     // Then console.log kiya us kay results ko
 
-    // console.log(response)
+
     // Jab humain result aik string main mila to hum nay us ko aik div bana kar us main dal diya response wali string ko 
 
     let div = document.createElement("div")
     div.innerHTML = response;
     // div ki inner html ko response kiya ab humain dom mila
-    // console.log(div)
+
     // us ko console.log kiya to humain aik dom mila
 
 
     // ab dom kay andar search karnay kay liye a's yani links ko songs kay hum nay tds walay var ki madad say a's ko find kiya hymain aik a's ki 13 lists mili jitni songs main thi links
 
     let as = div.getElementsByTagName("a")
-    // console.log(as)
+
     // ab humain a yani links console.log kar kay mil gaye to ab hymain un kay bhin andar kay links find karnay hain 
 
     // aik emtpy araay banany jis main bad main links aik sath store ho sakain 
@@ -82,7 +82,7 @@ async function getsongs(folder) {
     // After adding all songs, now we can add event listeners to the spans
     let musicDiv = document.querySelector(".music");
     let allSpans = musicDiv.getElementsByTagName("span");
-    // console.log(allSpans); 
+
     Array.from(allSpans).forEach(e => {
 
 
@@ -96,6 +96,8 @@ async function getsongs(folder) {
         })
 
     })
+
+    return songs;
 
 
 
@@ -118,9 +120,16 @@ let PlayMusic = (track, pause = false) => {
     currentsong.src = `/${currentfolder}/${track}`;
 
     if (!pause) {
-
         currentsong.play();
-
+        // ✅ Update button to pause icon when playing
+        let playbtn = document.querySelector("#playbtn");
+        playbtn.classList.add("ri-pause-circle-line");
+        playbtn.classList.remove("ri-play-circle-line");
+    } else {
+        // If pause = true, show play icon
+        let playbtn = document.querySelector("#playbtn");
+        playbtn.classList.add("ri-play-circle-line");
+        playbtn.classList.remove("ri-pause-circle-line");
     }
 
     currentsong.onended = () => {
@@ -131,13 +140,64 @@ let PlayMusic = (track, pause = false) => {
     let songtime = document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
 
 }
+async function displayAlbums() {
 
+    console.log("displaying albums")
+    let a = await fetch(`/songs/`)
+    let response = await a.text();
+    let div = document.createElement("div")
+    div.innerHTML = response;
+
+    let anchors = div.getElementsByTagName("a");
+    let cardcontainer = document.querySelector(".cards");
+
+
+    let array = Array.from(anchors)
+    for (let index = 0; index < array.length; index++) {
+        const e = array[index];
+        if (e.href.includes("%5Csongs%5C")) {
+            let folder = e.href.split("%5Csongs%5C")[1].split("/")[0]
+            // now get the meta data of the folder
+            let a = await fetch(`/songs/${folder}/info.json`)
+            let response = await a.json();
+
+            cardcontainer.innerHTML = cardcontainer.innerHTML + `
+                <div data-folder="${folder}" class="card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
+                        <path
+                            d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22Z"
+                            fill="#22C55E" />
+                        <path
+                            d="M10.6219 8.41459C10.5562 8.37078 10.479 8.34741 10.4 8.34741C10.1791 8.34741 10 8.52649 10 8.74741V15.2526C10 15.3316 10.0234 15.4088 10.0672 15.4745C10.1897 15.6583 10.4381 15.708 10.6219 15.5854L15.5008 12.3328C15.5447 12.3035 15.5824 12.2658 15.6117 12.2219C15.7343 12.0381 15.6846 11.7897 15.5008 11.6672L10.6219 8.41459Z"
+                            fill="#000000" />
+                    </svg>
+                    <img src="/songs/${folder}/cover.jpg.jpg" class="cardinner" alt="">
+                    <h4>${response.title}</h4>
+                    <p>${response.description}</p>
+                </div>
+`
+
+        }
+    }
+
+    Array.from(document.querySelectorAll(".card")).forEach(e => {
+        e.addEventListener("click", async item => {
+
+            songs = await getsongs(`songs/${item.currentTarget.dataset.folder}`)
+
+            PlayMusic(songs[0], false)
+        })
+    })
+
+
+}
 
 async function main() {
 
 
-    await getsongs("songs/ncs");
-
+    await getsongs("songs/Crystalline Drive");
+    //now display albums
+    displayAlbums();
 
     //now a evnet listener is added to each span and when we click on it and it changes the button play and pause
 
@@ -244,13 +304,6 @@ async function main() {
 
     })
 
-    Array.from(document.getElementsByClassName("card")).forEach(e => {
-        e.addEventListener("click", async item => {
-
-            songs = await getsongs(`songs/${item.currentTarget.dataset.folder}`)
-
-        })
-    })
 
 
 
