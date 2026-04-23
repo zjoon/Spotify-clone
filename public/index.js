@@ -1,4 +1,5 @@
 console.log("Lets write some javascript");
+alert("Hell daddy its made by me")
 let currentsong = new Audio();
 let songs;
 let currentfolder;
