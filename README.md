@@ -19,4 +19,3 @@ A music streaming app clone that mimics Spotify's interface and functionality.
 2. Open `index.html` in browser
 3. Click play button to start music
 
-## Project Structure
